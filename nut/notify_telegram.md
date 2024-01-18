@@ -53,26 +53,23 @@ LOCKFN /var/lib/nut/upssched.lock
 # * UPSNAME: имя ИБП, сгенерировавшего событие. Например main@localhost
 
 # Основная часть выполняемой команды.
-# Здесь нужно подставить правильный номер телефона администратора
-SMSCMD="/usr/local/scripts"
 
-# Перебираем возможные значения переданного скрипту параметра и шлём сообщение
 case $1 in
         onbatt)
-                        ${SMSCMD} "UPS \"${UPSNAME}\": Power lost"
+                        ${SMSCMD} curl -s -X POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage -d chat_id=<YOUR_CHAT_ID> -d text='❌  UPS - переход на питание от батареи'
                 ;;
         online)
-                        ${SMSCMD} "UPS \"${UPSNAME}\": Power restored"
+                        ${SMSCMD} curl -s -X POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage -d chat_id=<YOUR_CHAT_ID> -d text='✅  UPS - электричество восстановлено'
                 ;;
         lowbatt)
-                        ${SMSCMD} "UPS \"${UPSNAME}\": Low battery"
+                        ${SMSCMD} curl -s -X POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage -d chat_id=<YOUR_CHAT_ID> -d text='UPS - низкий уровень заряда батареи'
                 ;;
         replbatt)
-                        ${SMSCMD} "UPS \"${UPSNAME}\": Please, replace battery"
+                        ${SMSCMD} curl -s -X POST https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage -d chat_id=<YOUR_CHAT_ID> -d text='UPS - требуется замена батареи'
                 ;;
 esac
-
 ```
+
 Делаем скрипт исполняемым и перезапускаем NUT-клиент:
 
 ```
