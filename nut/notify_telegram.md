@@ -1,5 +1,7 @@
-Переходим к настройке. Мы будем дополнять конфигурацию из предыдущей статьи. Для начала добавим в файл "/etc/nut/upsmon.conf" строки:
+## Запуск скриптов на события ИБП , а точнее отправляем сообщение в телеграмм.
 
+Для начала добавим в файл "/etc/nut/upsmon.conf" строки:
+```
 # Путь к утилите upssched
 NOTIFYCMD /sbin/upssched
 
@@ -18,8 +20,9 @@ NOTIFYFLAG ONLINE	SYSLOG+WALL+EXEC
 NOTIFYFLAG ONBATT	SYSLOG+WALL+EXEC
 NOTIFYFLAG LOWBATT	SYSLOG+WALL+EXEC
 NOTIFYFLAG REPLBATT	SYSLOG+WALL+EXEC
+```
 Далее приводим файл "/etc/nut/upssched.conf" к виду:
-
+```
 # Скрипт, который будет запускаться на события от ИБП
 CMDSCRIPT /etc/nut/upssched.sh
 
@@ -38,8 +41,10 @@ PIPEFN /var/lib/nut/upssched.pipe
 # Файл блокировки для исключения "состояния гонки",
 # которая возможна при обработке нескольких событий одновременно
 LOCKFN /var/lib/nut/upssched.lock
-Ну и наконец создаём скрипт "/etc/nut/upssched.sh". В нашем случае он будет выглядеть так:
+```
 
+Ну и наконец создаём скрипт "/etc/nut/upssched.sh"
+```
 #!/bin/sh
 
 # Этот скрипт будет запускаться nut-клиентом
@@ -49,7 +54,7 @@ LOCKFN /var/lib/nut/upssched.lock
 
 # Основная часть выполняемой команды.
 # Здесь нужно подставить правильный номер телефона администратора
-SMSCMD="/usr/local/scripts/zabbix_smsc.pl +79123456789 msg"
+SMSCMD="/usr/local/scripts"
 
 # Перебираем возможные значения переданного скрипту параметра и шлём сообщение
 case $1 in
@@ -67,6 +72,9 @@ case $1 in
                 ;;
 esac
 
+```
 Делаем скрипт исполняемым и перезапускаем NUT-клиент:
 
+```
 chmod +x /etc/nut/upssched.sh && service nut-client restart
+```
