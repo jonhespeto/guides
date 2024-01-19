@@ -7,7 +7,7 @@ sudo apt update
 sudo apt install rear genisoimage syslinux nfs-common tmux -y
 ```
 
-меняем конфиг rear 
+меняем конфиг rear:
 ```
 sudo nano /etc/rear/local.conf
 ```
@@ -29,11 +29,16 @@ PROGRESS_WAIT_SECONDS="10"
 ``` 
 sudo nano /usr/share/rear/verify/NETFS/default/050_start_required_nfs_daemons.sh
 ```
-меняем на 
+
+меняем
+```
+test "ok" = $attempt || Error "RPC portmapper '$portmapper_program' unavailable."
+```
+на
 ```
 test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavailable."
 ```
-запуск бекапа rear через tmux 
+запуск бекапа rear предпочтительно через tmux:
 ```
 sudo rear -v -d mkbackup
 ```
