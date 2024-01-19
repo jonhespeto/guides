@@ -14,7 +14,7 @@ sudo nano /etc/rear/local.conf
 добавляем:
 ```
 OUTPUT=ISO
-OUTPUT_URL=nfs://<IP_адресс>/volume1/Backups
+OUTPUT_URL=nfs://<IP_адрес>/volume1/Backups
 BACKUP=NETFS
 BACKUP_OPTIONS="nfsvers=4.1,nolock"
 NETFS_KEEP_OLD_BACKUP_COPY=
