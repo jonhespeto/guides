@@ -11,7 +11,7 @@ sudo apt install rear genisoimage syslinux nfs-common tmux -y
 ```
 sudo nano /etc/rear/local.conf
 ```
-добавляем:
+В случае копирования архива в расшаренную папку добавляем:
 ```
 OUTPUT=ISO
 OUTPUT_URL=nfs://<IP_адрес>/volume1/Backups
