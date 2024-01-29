@@ -11,6 +11,7 @@ iptables -L INPUT --line-numbers
 ```
 iptables -D INPUT номер_строки
 ```
+
 Для цепочки  POSTROUTING.
 ```
 iptables -t nat -L POSTROUTING --line-numbers
