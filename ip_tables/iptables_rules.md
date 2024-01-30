@@ -17,6 +17,7 @@ iptables -D INPUT номер_строки
 iptables -t nat -L POSTROUTING --line-numbers
 ```
 Удаляем правило:
+
 ```
 iptables -t nat -D POSTROUTING номер_строки
 ```
