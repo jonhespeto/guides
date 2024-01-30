@@ -4,7 +4,7 @@
 apt-get install tmux
 ```
 
-Чтобы ключить управление мышью добавляем в /etc/tmux.conf :
+Чтобы включить управление мышью добавляем в /etc/tmux.conf :
 ```
 set -g mouse on
 ```
