@@ -9,7 +9,7 @@ set -g mouse on
 ```
 tmux new -s название сессии
 ```
-```
+``` 
 tmux attach || tmux new
 ```
 
