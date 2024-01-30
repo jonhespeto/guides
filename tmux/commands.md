@@ -8,6 +8,7 @@ apt-get install tmux
 ```
 set -g mouse on
 ```
+Создаем новую сессию:
 ```
 tmux new -s название сессии
 ```
