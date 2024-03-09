@@ -1,0 +1,90 @@
+{
+    "log": {
+        "loglevel": "warning"
+    },
+    "routing": {
+        "rules": [],
+        "domainStrategy": "AsIs"
+    },
+    "inbounds": [
+        {
+            "listen": "server_ip",
+            "port": 443,
+            "protocol": "vless",
+            "tag": "vless_tls",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "client1_id",
+                        "email": "clien1_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client2_id",
+                        "email": "clien2_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client3_id",
+                        "email": "clien3_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client4_id",
+                        "email": "clien4_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client5_id",
+                        "email": "clien5_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client6_id",
+                        "email": "clien6_mail",
+                        "flow": "xtls-rprx-vision"
+                    },
+                    {
+                        "id": "client7_id",
+                        "email": "clien7_mail",
+                        "flow": "xtls-rprx-vision"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "reality",
+                "realitySettings": {
+                    "show": false,
+                    "xver": 0,
+                    "dest": "www.microsoft.com:443",
+                    "serverNames": [
+                        "www.microsoft.com"
+                    ],
+                    "privateKey": "privaet_key",
+                    "shortIds": [
+                        "short_id"
+                    ]
+                }
+            },
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ]
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "block"
+        }
+    ]
+}
