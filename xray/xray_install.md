@@ -1,4 +1,4 @@
-### Run this command to generate short IDs, You can have multiple short IDs or just one. Save it for later.
+# Run this command to generate short IDs, You can have multiple short IDs or just one. Save it for later
 
 ```bash
 openssl rand -hex 8
