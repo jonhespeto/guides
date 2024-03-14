@@ -38,6 +38,7 @@ test "ok" = $attempt || Error "RPC portmapper '$portmapper_program' unavailable.
 ```
 test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavailable."
 ```
+
 запуск бекапа rear предпочтительно через tmux:
 ```
 sudo rear -v -d mkbackup
