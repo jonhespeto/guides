@@ -1,18 +1,19 @@
 ### Установка:
 
-```
+```text
 echo 'deb http://download.opensuse.org/repositories/Archiving:/Backup:/Rear/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/Archiving:Backup:Rear.list
 curl -fsSL https://download.opensuse.org/repositories/Archiving:Backup:Rear/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/Archiving_Backup_Rear.gpg > /dev/null
 sudo apt update
 sudo apt install rear genisoimage syslinux nfs-common tmux -y
 ```
 
-меняем конфиг rear:
-```
+Меняем конфиг rear:
+```text
 sudo nano /etc/rear/local.conf
 ```
+
 В случае копирования архива в расшаренную папку добавляем:
-```
+```text
 OUTPUT=ISO
 OUTPUT_URL=nfs://<IP_адрес>/volume1/Backups
 BACKUP=NETFS
@@ -25,21 +26,23 @@ OUTPUT_PREFIX="$HOSTNAME.ReaRBackup.$( date +%d-%m-%Y 2>/dev/null )"
 NETFS_PREFIX="$HOSTNAME.ReaRBackup.$( date +%d-%m-%Y 2>/dev/null )"
 PROGRESS_WAIT_SECONDS="10"
 ```
+
 далее чтобы избежать ошибки правим:
-``` 
+```text
 sudo nano /usr/share/rear/verify/NETFS/default/050_start_required_nfs_daemons.sh
 ```
 
 меняем
-```
+```text
 test "ok" = $attempt || Error "RPC portmapper '$portmapper_program' unavailable."
 ```
+
 на
-```
+```text
 test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavailable."
 ```
 
-запуск бекапа rear предпочтительно через tmux:
-```
+Запуск бекапа rear предпочтительно через tmux:
+```text
 sudo rear -v -d mkbackup
 ```
