@@ -1,6 +1,6 @@
 ### Установка:
 
-```text
+```bash
 echo 'deb http://download.opensuse.org/repositories/Archiving:/Backup:/Rear/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/Archiving:Backup:Rear.list
 curl -fsSL https://download.opensuse.org/repositories/Archiving:Backup:Rear/xUbuntu_20.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/Archiving_Backup_Rear.gpg > /dev/null
 sudo apt update
@@ -8,7 +8,7 @@ sudo apt install rear genisoimage syslinux nfs-common tmux -y
 ```
 
 Меняем конфиг rear:
-```text
+```bash
 sudo nano /etc/rear/local.conf
 ```
 
@@ -28,7 +28,7 @@ PROGRESS_WAIT_SECONDS="10"
 ```
 
 далее чтобы избежать ошибки правим:
-```text
+```bash
 sudo nano /usr/share/rear/verify/NETFS/default/050_start_required_nfs_daemons.sh
 ```
 
@@ -43,6 +43,6 @@ test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavail
 ```
 
 Запуск бекапа rear предпочтительно через tmux:
-```text
+```bash
 sudo rear -v -d mkbackup
 ```
