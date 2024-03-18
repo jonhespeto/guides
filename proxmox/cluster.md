@@ -16,10 +16,9 @@ pmxcfs -l
 rm /etc/pve/corosync.conf
 rm -r /etc/corosync/*
 ```
-### Убиваем одиночный процесс, лучше несколько раз.
+### Убиваем одиночный процесс, лучше несколько раз , пока не будет "pmxcfs: no process found".
 ```bash
 killall pmxcfs
-pmxcfs: no process found
 ```
 ### Удаляем список нод с сервера, иначе они будут болтаться там «неживые».
 ```bash
