@@ -2,9 +2,9 @@
 
 ### Останавливаем кластер
 ```bash
+rm -fr /etc/pve/nodes/*
 systemctl stop pve-cluster
 systemctl stop corosync
-rm -fr /etc/pve/nodes/*
 ```
 
 ### Старуем кластер снова в одиночном режиме
@@ -33,3 +33,41 @@ systemctl start pve-cluster
 ```bash
 service pveproxy restart
 ```
+
+
+## В случае если будут ошибки с сертификатами :
+Delete the HTTPS certificates.
+```bash
+rm /etc/pve/pve-root-ca.pem
+rm /etc/pve/priv/pve-root-ca.key
+rm /etc/pve/nodes/pmx01/pve-ssl.pem
+rm /etc/pve/nodes/pmx02/pve-ssl.pem
+rm /etc/pve/nodes/pmx03/pve-ssl.pem
+rm /etc/pve/nodes/pmx01/pve-ssl.key
+rm /etc/pve/nodes/pmx02/pve-ssl.key
+rm /etc/pve/nodes/pmx03/pve-ssl.key
+rm /etc/pve/authkey.pub
+rm /etc/pve/priv/authkey.key
+rm /etc/pve/priv/authorized_keys
+```
+Generate new HTTPS certificates
+
+
+```bash
+pvecm updatecerts -f
+```
+Restart the pvedaemon and pveproxy services.
+```bash
+systemctl restart pvedaemon pveproxy
+```
+SSH Certificates
+SSH is used to migrate VM's between nodes.
+
+Move the ssh known_hosts file.
+```bash
+mv /root/.ssh/known_hosts /root/.ssh/known_hosts_old
+```
+Now SSH between all the nodes to ensure you have no SSH issues.
+
+### After Reboot system
+Finally, shutdown the VM's and reboot the hosts, one by one.
