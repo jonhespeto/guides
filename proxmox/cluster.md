@@ -2,7 +2,7 @@
 
 ### Останавливаем кластер
 ```bash
-rm -fr /etc/pve/nodes/*
+rm -rf /etc/pve/nodes/*
 systemctl stop pve-cluster
 systemctl stop corosync
 ```
@@ -22,7 +22,7 @@ killall pmxcfs
 ```
 ### Удаляем список нод с сервера, иначе они будут болтаться там «неживые».
 ```bash
-rm -fr /etc/pve/nodes
+rm -rf /etc/pve/nodes
 ```
 ### Включем кластер
 ```bash
