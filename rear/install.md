@@ -46,3 +46,57 @@ test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavail
 ```bash
 sudo rear -v -d mkbackup
 ```
+
+## Если хотим сделать бекап по расписанию :
+создадаем юнит сервиса:
+
+```bash
+nano /etc/systemd/system/rear.service
+```
+внесем следующий текст:
+```bash
+[Unit]
+Description=Relax-and-Recover
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rear mkbackup
+
+[Install]
+WantedBy=multi-user.target
+```
+Затем создаем юнит таймера:
+```bash
+nano /etc/systemd/system/rear.timer
+```
+Размещаем следующие строки:
+```bash
+[Unit]
+Description=Relax-and-Recover timer
+
+[Timer]
+OnCalendar=daily
+AccuracySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+В примере ежедневный запуск раз в 1 час точно в полночь, также будет выполнен автоматический запуск при пропуске задания.
+
+Применим изменения в юнитах:
+
+```bash 
+systemctl daemon-reload
+```
+Запускаем юнит сервис:
+```bash
+systemctl start rear
+```
+
+После чего должно выполниться резервное копирование. Если все прошло хорошо, то просто включаем таймер для него в автозагрузку:
+```bash
+systemctl enable rear.timer
+```
