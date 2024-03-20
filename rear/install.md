@@ -31,25 +31,20 @@ PROGRESS_WAIT_SECONDS="10"
 ```bash
 sudo nano /usr/share/rear/verify/NETFS/default/050_start_required_nfs_daemons.sh
 ```
-
 меняем
 ```text
 test "ok" = $attempt || Error "RPC portmapper '$portmapper_program' unavailable."
 ```
-
 на
 ```text
 test "ok" = $ attempt || LogPrint "RPC portmapper '$ portmapper_program' unavailable."
 ```
-
 Запуск бекапа rear предпочтительно через tmux:
 ```bash
 sudo rear -v -d mkbackup
 ```
-
 ## Если хотим сделать бекап по расписанию :
 создадаем юнит сервиса:
-
 ```bash
 nano /etc/systemd/system/rear.service
 ```
