@@ -4,7 +4,7 @@ ls -l `which init`
 ```
 если покажет симлинк вида
 ```bash
-lrwxrwxrwx 1 root root 20 фев 15  2017 /sbin/init -> /lib/systemd/systemd
+lrwxrwxrwx 1 root root 20 фев 1  2020 /sbin/init -> /lib/systemd/systemd
 ```
 то тут все понятно - systemd
 
