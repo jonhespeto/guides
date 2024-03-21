@@ -56,3 +56,7 @@ ps -C bash
 ```bash
 ps -efj
 ```
+или
+```bash 
+ps -aux
+```
