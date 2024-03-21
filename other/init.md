@@ -8,7 +8,7 @@ lrwxrwxrwx 1 root root 20 фев 1  2020 /sbin/init -> /lib/systemd/systemd
 ```
 то тут все понятно - systemd
 
-если симлинка нет, то команда
+если симлинка нет, то может помочь конструкция:
 ```bash
 strings /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit)/) { print toupper(substr($0, RSTART, RLENGTH));exit; }'
 ```
