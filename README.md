@@ -6,8 +6,7 @@
 
 [awk]: https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheat_sheet_gnuawk_v3.pdf
 
-|                                  |                                            |                                                   |
-|:--------------------------------|:------------------------------------------:|-------------------------------------------------:|
-|: - [Awk][awk]                      |:   [Awk](URL)                             :|                                                  :|
-|                                  |                                            [Awk](URL) |       |
-|                                  |          | [Awk](URL) |
+|                          |          |          |
+| ------------------------ |:--------:| --------:|
+| [Awk][awk]              | Text     | Text     |
+| Another row              | Text     | Text     |
