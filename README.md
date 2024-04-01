@@ -7,7 +7,7 @@
 [Sed]: https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheat_sheet_sed-2021.7.26.pdf
 [selinux]: https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheat_sheet_selinux_v2.pdf
 [Grep]: 
-
+[Ssh]:
 |-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|
 |:----------------|:---------------:|:---------------:|:---------------:|:---------------:|----------------:|
 | [Bash][Bash]      | [Awk][awk]      | [Awk][awk]      | [Awk][awk]      | [Awk][awk]      | [Awk][awk]      |
