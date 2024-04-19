@@ -9,6 +9,8 @@
 [Grep]: https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheatsheet-grep.pdf
 [Ssh]:  https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheat_sheet_ssh_v4.pdf
 [Sudo]: https://github.com/jonhespeto/guides/blob/main/cheat_sheet/cheatsheet-sudo-2022.4.27.pdf
+[Parted]:
+[Tmux]:
 
 |-----------------|-----------------|-----------------|-----------------|-----------------|-----------------|
 |:----------------|:---------------:|:---------------:|:---------------:|:---------------:|----------------:|
