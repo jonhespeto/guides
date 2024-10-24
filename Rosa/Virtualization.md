@@ -25,3 +25,7 @@ dnf install freeipa-healthcheck
 ipa-server-install --setup-dns
 
 kinit admin
+
+Install oVirt 3.5
+
+yum install ovirt-engine -y
