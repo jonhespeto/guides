@@ -10,9 +10,12 @@
 ("/evms/profiles/workstation" action apply commit #f clearall #t exclude ())
 ("/evms/control" action "write" control commit)
 ("/evms/control" action "write" control close)
+("/remount-destination" action "write")
 ; монтирование файловой системы и создание базовых директорий
 ; для p10 и ниже скрипт нужно переименовать в pkg-init
 ("pkg-init" action "write")
+;("/pkg-groups" language ("ru_RU") action "list")
+;("/pkg-install/slideshow-config" language ("ru_RU") action "read")
 ; установка базовой системы и дополнительных групп пакетов из pkg-groups.tar,
 ; которые указываются по именам через пробел в параметре lists
 ("/pkg-install" action "write" lists "" auto #t)
