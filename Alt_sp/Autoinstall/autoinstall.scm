@@ -26,7 +26,7 @@
 ("/net-eth" action "write" reset #t)
 ("/net-eth" action "write" name "eth0" configuration "dhcp" default "" search "" dns "" computer_name "c245")
 ; настройка сетевого интерфейса на статический IPv4
-; ("/net-eth" action "write" name "eth0" configuration "static" default "192.168.1.1" search "localhost.com" dns "192.168.1.1" computer_name "c245" ipv "4" ipv_enabled #t)
+; ("/net-eth" action "write" name "eth0" configuration "static" default "192.168.0.1" search "localhost.com" dns "192.168.0.1" computer_name "c245" ipv "4" ipv_enabled #t)
 ; ("/net-eth" action "add_iface_address" name "eth0" addip "192.168.1.2" addmask "24" ipv "4")
 ("/net-eth" action "write" commit #t)
 ; установка пароля суперпользователя root '123'
