@@ -1,4 +1,4 @@
-Install "Remote-SSH" extensions
+## Install "Remote-SSH" extensions
 
 Make ssh keys
 
