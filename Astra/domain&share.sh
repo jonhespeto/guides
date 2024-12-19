@@ -6,6 +6,8 @@
     exit 1
 }
 
+dir="$(dirname "$0")"
+
 # Цветовая схема
 green="\033[1;32m" # Green
 red="\033[31m"     # Red
@@ -37,7 +39,7 @@ sed -i '/devel/s/^/#/' /etc/apt/sources.list
 
 # okularGOst
 echo "deb http://packages.lab50.net/okular alse18 main non-free" >/etc/apt/sources.list.d/okulargost.list
-cp "$(dirname "$0")"/lab50.gpg /etc/apt/trusted.gpg.d/lab50.gpg
+cp "${dir}"/lab50.gpg /etc/apt/trusted.gpg.d/lab50.gpg
 chmod 0644 /etc/apt/trusted.gpg.d/lab50.gpg
 
 # Обновляем систему
@@ -96,10 +98,10 @@ apt install yandex-browser-stable -y
 # 2 - Модуль поддержки основных приложений, считывателей и ДСЧ
 # 3 - Провайдер класса КС1
 # 4 - CAPILite, программы и библиотеки для высокоуровневой работы с криптографией (сертификатами, CMS...)
-apt install -y "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-base_5.0.13000-7_all.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-rdr-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-kc1-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-capilite-64_5.0.13000-7_amd64.deb
+apt install -y "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-base_5.0.13000-7_all.deb \
+    "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-rdr-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-kc1-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-capilite-64_5.0.13000-7_amd64.deb
 
 # Дополнительные пакеты
 # 1 - Пакет для работы Curl с поддержкой российских алгоритмов
@@ -108,32 +110,32 @@ apt install -y "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-base_5.0.13000-7_a
 # 4 - Графическое приложение для доступа к основным функциям и настройкам КриптоПро CSP
 # 5 - Модули поддержки PCSC-считывателей, смарт-карт
 # 6 - Модуль поддержки PKCS#11
-apt install -y "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-curl-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-ca-certs_5.0.13000-7_all.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-rdr-gui-gtk-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-cptools-gtk-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-rdr-pcsc-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/lsb-cprocsp-pkcs11-64_5.0.13000-7_amd64.deb
+apt install -y "${dir}"/CryptoPro_R3_deb/cprocsp-curl-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-ca-certs_5.0.13000-7_all.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-rdr-gui-gtk-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-cptools-gtk-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-rdr-pcsc-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/lsb-cprocsp-pkcs11-64_5.0.13000-7_amd64.deb
 
 # Поддержка ключевых носителей
 # 1 - Модуль поддержки смарт-карт и токенов Рутокен
 # 2 - Модуль поддержки смарт-карт и токенов JaCarta
 # 3 - Модуль поддержки ключей PKCS#11
-apt install -y "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-rdr-rutoken-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-rdr-jacarta-64_5.0.13000-7_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-rdr-cryptoki-64_5.0.13000-7_amd64.deb
+apt install -y "${dir}"/CryptoPro_R3_deb/cprocsp-rdr-rutoken-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-rdr-jacarta-64_5.0.13000-7_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-rdr-cryptoki-64_5.0.13000-7_amd64.deb
 
 # Пакет с инструментарием разработчика для создания клиентских и серверных приложений для работы с ЭП
 # (в соответствии с CAdES) с использованием российских криптографических алгоритмов
 # Пакет для работы КриптоПро ЭЦП Browser plug-in
-apt install -y "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-pki-cades-64_2.0.15000-1_amd64.deb \
-    "$(dirname "$0")"/CryptoPro_R3_deb/cprocsp-pki-plugin-64_2.0.15000-1_amd64.deb
+apt install -y "${dir}"/CryptoPro_R3_deb/cprocsp-pki-cades-64_2.0.15000-1_amd64.deb \
+    "${dir}"/CryptoPro_R3_deb/cprocsp-pki-plugin-64_2.0.15000-1_amd64.deb
 
 # Установка Okular_Gost
 apt install -y okular-csp
 
 # Установка дополнительных пакетов
-apt install -y "$(dirname "$0")"/install_deb/*
+apt install -y "${dir}"/install_deb/*
 
 # KRDC
 apt install krdc -y
