@@ -64,7 +64,7 @@ versions=("3.1.1" "3.0" "2.1" "2.0" "1.0")
 mount_point="/mnt/test"
 
 echo ""
-echo -e "${green} Пробуем подключить ${nc}$(basename "${share_dir}")${green}${nc}"
+echo -e "${green} Пробуем подключить ${nc}$(basename "${smb_share1}")${green}${nc}"
 echo ""
 
 if [ ! -d "$mount_point" ]; then
@@ -77,7 +77,7 @@ while true; do
     ping -c 2 $share_addr &>/dev/null
     if [ ! $? -eq 0 ]; then
         echo ""
-        echo -e "${red}  Адрес ${nc}$share_addr${red} сетевого каталога ${nc}$(basename "${share_dir}")${red} не пингуется, проверить адрес или соединение!${nc}"
+        echo -e "${red}  Адрес ${nc}$share_addr${red} сетевого каталога ${nc}$(basename "${smb_share1}")${red} не пингуется, проверить адрес или соединение!${nc}"
         echo ""
         break
     fi
