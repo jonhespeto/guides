@@ -101,9 +101,12 @@ while true; do
             # Стартуем и добавляем autofs в автозагрузку
             systemctl enable autofs --now &>/dev/null
 
-            # добавление ярдлыка
-            cat <<EOF >/etc/skel/Desktop/$smb_share1.desktop
-asda
+            # добавление ярлыка
+            cat <<EOF >/usr/share/applications/flydesktop/$smb_share1.desktop
+[Desktop Entry]
+Name=$smb_share1
+Type=Link
+URL=/mnt/$smb_share1
 EOF
 
             break
