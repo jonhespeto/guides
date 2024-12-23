@@ -100,6 +100,12 @@ while true; do
 
             # Стартуем и добавляем autofs в автозагрузку
             systemctl enable autofs --now &>/dev/null
+
+            # добавление ярдлыка
+            cat <<EOF >/etc/skel/Desktop/$smb_share1.desktop
+asda
+EOF
+
             break
         fi
     done
