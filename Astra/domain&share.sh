@@ -8,27 +8,30 @@
 
 dir="$(dirname "$0")"
 
+# Подгружаем переменные из файла
+source "${dir}"/my_env_file.env
+
 # Цветовая схема
 green="\033[1;32m" # Green
 red="\033[31m"     # Red
 nc="\033[0m"       # No Color
 
 # Поменять переменные
-DOMAIN_NAME="${DOMAIN_NAME}"
-share_addr=nas-2."${DOMAIN_NAME}"
-smb_share1=share1
-smb_share2=share2
-admin_login=login
-admin_pass=pass
-proxy_hostname=123
+DOMAIN_NAME="${env_DOMAIN_NAME}"
+share_addr="${env_share_addr}"
+smb_share1="${env_smb_share1}"
+smb_share2="${env_smb_share2}"
+admin_login="${env_admin_login}"
+admin_pass="${env_admin_pass}"
+#proxy_hostname="${env_proxy_hostname}"
 
-# Добавляем прокси
-cat <<EOF >/etc/apt/apt.conf.d/05proxy
-Acquire::https::Proxy "http://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
-Acquire::http::Proxy "http://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
-Acquire::ftp::Proxy "ftp://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
-Acquire::::Proxy "true";
-EOF
+# # Добавляем прокси
+# cat <<EOF >/etc/apt/apt.conf.d/05proxy
+# Acquire::https::Proxy "http://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
+# Acquire::http::Proxy "http://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
+# Acquire::ftp::Proxy "ftp://"${proxy_hostname}"."${DOMAIN_NAME}":8080/";
+# Acquire::::Proxy "true";
+# EOF
 
 # Раскоментируем репы
 sed -i 's/^#//' /etc/apt/sources.list
@@ -53,18 +56,82 @@ astra-update -A -r -T
 # Устанавливаем autofs cifs-utils
 apt install autofs cifs-utils -y
 
-# Cоздаем файл auto.share
-echo ""${smb_share1}"   -fstype=cifs,sec=krb5,vers=2.0,multiuser,cruid=\$USER,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share1}"" >/etc/auto.share
-#echo "${smb_share2}   -fstype=cifs,sec=krb5,multiuser,cruid=\$UID,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share2}"" >>/etc/auto.share
+# Получаем ip адрес сетевого каталога
+share_addr_ip=$(host $share_addr | awk '/has address/ { print $4 }')
 
-# Делаем маску 644
-chmod 644 /etc/auto.share
+# Определяем версию протокола smb
+versions=("3.1.1" "3.0" "2.1" "2.0" "1.0")
+mount_point="/mnt/test"
 
-# В файл /etc/auto.master добавляем параметры куда монтировать
-grep -q "^/mnt/.* /etc/auto.share browse$" "/etc/auto.master" || echo "/mnt/    /etc/auto.share browse" >>"/etc/auto.master"
+echo ""
+echo -e "${green} Пробуем подключить ${nc}$(basename "${share_dir}")${green}${nc}"
+echo ""
 
-# Запускаем и добавляем в автозапуск autofs
-systemctl enable autofs --now
+if [ ! -d "$mount_point" ]; then
+    mkdir -p "$mount_point"
+fi
+
+while true; do
+    echo "Проверка соединения..."
+    echo ""
+    ping -c 2 $share_addr &>/dev/null
+    if [ ! $? -eq 0 ]; then
+        echo ""
+        echo -e "${red}  Адрес ${nc}$share_addr${red} сетевого каталога ${nc}$(basename "${share_dir}")${red} не пингуется, проверить адрес или соединение!${nc}"
+        echo ""
+        break
+    fi
+
+    # Создаем файл /root/.creds с логином и паролем
+    echo "username=$admin_login" >/root/.creds
+    echo "password=$admin_pass" >>/root/.creds
+    chmod 600 /root/.creds
+
+    # Попытка монтирования с указанным логином и паролем
+    mounted=false
+    for ver in "${versions[@]}"; do
+        if timeout 5 mount -t cifs -o vers=$ver,cred=/root/.creds //"$share_addr_ip"/"${smb_share1}" "$mount_point" >/dev/null 2>&1; then
+            echo ""
+            echo -e "${green} Успешное подключение каталога ${nc}$(basename "${smb_share1}") ${green}, версия SMB протокола - $ver ${nc}"
+            echo ""
+            mounted=true
+
+            # Добавляем параметры монтирования в файл /etc/auto.share
+            echo ""${smb_share1}"   -fstype=cifs,sec=krb5,vers=$ver,multiuser,cruid=\$USER,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share1}"" >/etc/auto.share
+            #echo "${smb_share2}   -fstype=cifs,sec=krb5,multiuser,cruid=\$UID,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share2}"" >>/etc/auto.share
+
+            chmod 644 /etc/auto.share
+
+            # В файл /etc/auto.master добавляем параметры куда монтировать
+            grep -q "^/mnt/.* /etc/auto.share browse$" "/etc/auto.master" || echo "/mnt/    /etc/auto.share browse" >>"/etc/auto.master"
+
+            # Стартуем и добавляем autofs в автозагрузку
+            systemctl enable autofs --now &>/dev/null
+            break
+        fi
+    done
+
+    # Проверка успешности монтирования
+    if [ "$mounted" = true ]; then
+        break
+    else
+        echo ""
+        echo -e "${red} Неудачная попытка монтирования ${nc}$(basename "${smb_share1}")${red} , проверить логин или пароль ${nc}"
+        echo ""
+        break
+    fi
+
+done
+
+if mountpoint -q "$mount_point"; then
+    umount "$mount_point"
+fi
+
+# Удаляем временный каталог
+if [ -d "$mount_point" ]; then
+    rmdir "$mount_point"
+fi
+rm -rf /root/.creds
 
 # sudoers
 echo "%astra_sudoers ALL=(ALL:ALL) ALL" >>/etc/sudoers
