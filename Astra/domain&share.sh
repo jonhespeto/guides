@@ -40,18 +40,11 @@ sed -i 's/^#//' /etc/apt/sources.list
 sed -i '/cdrom/s/^/#/' /etc/apt/sources.list
 sed -i '/devel/s/^/#/' /etc/apt/sources.list
 
-# okularGOst
-echo "deb http://packages.lab50.net/okular alse18 main non-free" >/etc/apt/sources.list.d/okulargost.list
-cp "${dir}"/lab50.gpg /etc/apt/trusted.gpg.d/lab50.gpg
-chmod 0644 /etc/apt/trusted.gpg.d/lab50.gpg
-
 # Обновляем систему
 if ! apt-get update; then
     echo -e "${red} Не удалось обновить список пакетов!${nc}"
     exit 1
 fi
-
-astra-update -A -r -T
 
 # Устанавливаем autofs cifs-utils
 apt install autofs cifs-utils -y
@@ -132,6 +125,13 @@ if [ -d "$mount_point" ]; then
     rmdir "$mount_point"
 fi
 rm -rf /root/.creds
+
+# okularGOst
+echo "deb http://packages.lab50.net/okular alse18 main non-free" >/etc/apt/sources.list.d/okulargost.list
+cp "${dir}"/lab50.gpg /etc/apt/trusted.gpg.d/lab50.gpg
+chmod 0644 /etc/apt/trusted.gpg.d/lab50.gpg
+
+astra-update -A -r -T
 
 # sudoers
 echo "%astra_sudoers ALL=(ALL:ALL) ALL" >>/etc/sudoers
