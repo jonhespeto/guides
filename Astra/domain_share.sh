@@ -102,13 +102,11 @@ while true; do
             systemctl enable autofs --now &>/dev/null
 
             # добавление ярлыка
-            cat <<EOF >/usr/share/applications/flydesktop/"$(basename "${smb_share1}")".desktop
-[Desktop Entry]
-Name=$(basename "${smb_share1}")
-Type=Link
-URL=/mnt/$(basename "${smb_share1}")
-EOF
-
+            printf "%s\n" \
+                "[Desktop Entry]" \
+                "Name=$(basename "${smb_share1}")" \
+                "Type=Link" \
+                "URL=/mnt/$(basename "${smb_share1}")" >"/usr/share/applications/flydesktop/"$(basename "${smb_share1}")".desktop"
             break
         fi
     done
