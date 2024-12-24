@@ -216,6 +216,54 @@ apt install krdc -y
 DEBIAN_FRONTEND=noninteractive apt install -y astra-ad-sssd-client
 astra-ad-sssd-client -d ${DOMAIN_NAME} -u ${admin_login} -p ${admin_pass} -sn -y
 
+# Принтеры HP
+subnet=$(echo $share_addr_ip | awk -F '.' '{print $1"."$2"."$3}')
+while true; do
+    echo ""
+    read -r -p $'\033[1;32m Устанавливаем драйвер для HP (hp plugin} ?\033[31m (y/n)\033[0m : ' answer
+    case "$answer" in
+    [Yy]*)
+        while true; do
+            echo ""
+            echo -e "${green} Далее если выбрать ${red}'n'${green} будет попытка подключения принтера по USB, если ${red}'y'${green} по Сети!${nc}"
+            echo ""
+            read -r -p $'\033[1;32m Принтер HP подключен по СЕТИ ?\033[31m (y/n)\033[0m : ' answer
+            case "$answer" in
+            [Yy]*)
+                while true; do
+                    read -r -p "ip принтера ${subnet}." print_hp_ip
+                    if [[ $print_hp_ip =~ ^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])$ ]]; then
+                        echo "OK!"
+                        break
+                    else
+                        echo -e "${red}число от 1 до 255${nc}"
+                    fi
+                done
+                yes | tr -d 'yes' | hp-plugin -i 2>/dev/null
+                hp-setup -i -a -x "$subnet"."$print_hp_ip"
+                break
+                ;;
+            [Nn]*)
+                yes | tr -d 'yes' | hp-plugin 2>/dev/null
+                yes | tr -d 'yes' | hp-setup -i -a
+                break
+                ;;
+            *)
+                echo -e "${red}Please answer y or n.${nc}"
+                ;;
+            esac
+        done
+        break
+        ;;
+    [Nn]*)
+        break
+        ;;
+    *)
+        echo -e "${red}Please answer y or n.${nc}"
+        ;;
+    esac
+done
+
 # Монтирование usb носителей
 sed -i '17i\auth\toptional\t\t\tpam_group.so' /etc/pam.d/common-auth
 echo -e "\n*;*;*;Al0000-2400;floppy" >>/etc/security/group.conf
