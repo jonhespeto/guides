@@ -90,8 +90,8 @@ while true; do
             mounted=true
 
             # Добавляем параметры монтирования в файл /etc/auto.share
-            echo ""${smb_share1}"   -fstype=cifs,sec=krb5,vers=$ver,multiuser,cruid=\$USER,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share1}"" >/etc/auto.share
-            #echo "${smb_share2}   -fstype=cifs,sec=krb5,multiuser,cruid=\$UID,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share2}"" >>/etc/auto.share
+            echo ""$(basename "${smb_share1}")"   -fstype=cifs,sec=krb5,vers=$ver,multiuser,cruid=\$USER,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share1}"" >/etc/auto.share
+            #echo ""$(basename "${smb_share2}")"   -fstype=cifs,sec=krb5,multiuser,cruid=\$UID,domain="${DOMAIN_NAME}" ://"${share_addr}"/"${smb_share2}"" >>/etc/auto.share
 
             chmod 644 /etc/auto.share
 
@@ -102,11 +102,11 @@ while true; do
             systemctl enable autofs --now &>/dev/null
 
             # добавление ярлыка
-            cat <<EOF >/usr/share/applications/flydesktop/$smb_share1.desktop
+            cat <<EOF >/usr/share/applications/flydesktop/"$(basename "${smb_share1}")".desktop
 [Desktop Entry]
-Name=$smb_share1
+Name=$(basename "${smb_share1}")
 Type=Link
-URL=/mnt/$smb_share1
+URL=/mnt/$(basename "${smb_share1}")
 EOF
 
             break
