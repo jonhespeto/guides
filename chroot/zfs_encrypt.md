@@ -30,3 +30,6 @@ which doesn't require setting and then restoring the mountpoint property. I'd al
 zfs mount -a 
 ```
 as a shortcut to mount everything (Ubuntu for example, uses many datasets, so it's tedious to mount them one by one).
+
+
+## If the system boots in recovery mode (for example ubuntu), mount ZFS using the password
