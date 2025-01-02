@@ -20,4 +20,4 @@ sudo zfs set mountpoint=/mnt rpool/USERDATA/username_1b23ae
 sudo zfs mount rpool/USERDATA/username_1b23ae
 ```
 
-The alternate mount procedure can be simplified by importing the pool using the -R <temp_mountpoint>, which doesn't require setting and then restoring the mountpoint property. I'd also suggest to suggest zfs mount -a as a shortcut to mount everything (Ubuntu for example, uses many datasets, so it's tedious to mount them one by one).
+### The alternate mount procedure can be simplified by importing the pool using the -R <temp_mountpoint>, which doesn't require setting and then restoring the mountpoint property. I'd also suggest to suggest zfs mount -a as a shortcut to mount everything (Ubuntu for example, uses many datasets, so it's tedious to mount them one by one).
