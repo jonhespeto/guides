@@ -21,3 +21,7 @@ message="Service: $PAM_SERVICE. Login {$PAM_USER} from ${PAM_RHOST} - $(date)"
 ```
 nano /etc/pam.d/sshd
 ```
+в секцию  "# Create a new session keyring." добавляем:
+```
+session    optional     pam_exec.so /usr/bin/login-notify
+```
