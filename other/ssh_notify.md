@@ -3,7 +3,8 @@
 
 ### Создаем файл 
 ```
-nano /usr/bin/login-notify 
+sudo nano /usr/bin/login-notify
+sudo chmod 700 /usr/bin/login-notify 
 ```
 с содержимым ( заменить переменные ):
 
