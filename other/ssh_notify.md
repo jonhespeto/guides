@@ -25,3 +25,14 @@ nano /etc/pam.d/sshd
 ```
 session    optional     pam_exec.so /usr/bin/login-notify
 ```
+
+##### после выполняем:
+```
+pam-auth-update
+```
+
+### Важно !
+#### В конфигурационном файле ssh (например /etc/ssh/sshd_config.d/ssh_config.conf) должно быть:
+``` 
+UsePAM yes
+```
