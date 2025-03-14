@@ -6,7 +6,7 @@
 sudo nano /usr/bin/login-notify
 sudo chmod 700 /usr/bin/login-notify 
 ```
-с содержимым ( заменить переменные ):
+с содержимым ( заменить переменные token_bot и chat_id ):
 
 ```bash
 #!/bin/bash
