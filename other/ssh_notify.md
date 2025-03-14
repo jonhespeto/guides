@@ -20,7 +20,7 @@ message="Service: $PAM_SERVICE. Login {$PAM_USER} from ${PAM_RHOST} - $(date)"
 
 ##### Далее в файле 
 ```
-nano /etc/pam.d/sshd
+sudo nano /etc/pam.d/sshd
 ```
 в секцию  "# Create a new session keyring." добавляем:
 ```
@@ -32,7 +32,7 @@ session    optional     pam_exec.so /usr/bin/login-notify
 pam-auth-update
 ```
 
-### Важно !
+### Важно!
 #### В конфигурационном файле ssh (например /etc/ssh/sshd_config.d/ssh_config.conf) должно быть:
 ``` 
 UsePAM yes
